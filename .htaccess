@@ -1,0 +1,19 @@
+RewriteEngine on
+RewriteCond $1 !^(index\.php|assets|images|robots\.txt)
+RewriteRule ^(.*)$ index.php/$1 [L]
+
+# File modified on Fri Feb 22 06:18:07 2013 by server
+# For security reasons, mod_php is not used on this server. Use a php.ini file for php directives
+# php_flag display_startup_errors on
+# For security reasons, mod_php is not used on this server. Use a php.ini file for php directives
+# php_flag display_errors on
+# For security reasons, mod_php is not used on this server. Use a php.ini file for php directives
+# php_flag html_errors on
+
+
+<FilesMatch ".(flv|gif|jpg|jpeg|png|ico|swf|js|css|pdf)$">
+Header set Cache-Control "max-age=864000"
+</FilesMatch>
+<FilesMatch ".(php)$">
+Header set Cache-Control "max-age=0"
+</FilesMatch>
