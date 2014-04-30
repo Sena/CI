@@ -60,7 +60,7 @@ $default['swap_pre'] = '';
 $default['autoinit'] = TRUE;
 $default['stricton'] = FALSE;
 $default['hostname'] = 'localhost';
-$default['database'] = 'nautikal_2014';
+$default['database'] = 'database_name';
 
 
 $db['production']['username'] = 'admin';
