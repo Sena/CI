@@ -7,13 +7,22 @@ class MY_Model extends CI_Model {
 
     function __construct() {
         parent::__construct();
-        
-        if($this->alias == NULL) {
-            $this->alias = $this->table;
+    }
+    private function getTable()
+    {
+        if($this->table === NULL) {
+            $this->table = get_called_class();
+            $this->table = explode('_', $this->table);
+            $this->table = current($this->table);
+            $this->table = strtolower($this->table);
         }
+        return $this->table;
     }
     public function get(array $where = array())
     {
+        if($this->alias == NULL) {
+            $this->alias = $this->getTable();
+        }
         if(count($where) !== 0) {
             foreach ($where as $key => $value) {
                 if(is_array($value)) {
@@ -23,10 +32,10 @@ class MY_Model extends CI_Model {
                 }
             }
         }
-        return $this->db->get($this->table . ' AS ' . $this->alias);
+        return $this->db->get($this->getTable() . ' AS ' . $this->alias);
     }
     public function insert(array $data, $insert_id = FALSE) {
-        $this->db->insert($this->table, $data);
+        $this->db->insert($this->getTable(), $data);
         if($insert_id === TRUE) {
             return $this->db->insert_id();
         }
@@ -37,10 +46,10 @@ class MY_Model extends CI_Model {
                 $this->db->where($key, $value);
             }
         }
-        $this->db->update($this->table, $data); 
+        $this->db->update($this->getTable(), $data);
     }
     public function delete(array $where) {
-        $this->db->delete($this->table, $where);
+        $this->db->delete($this->getTable(), $where);
         $data = $this->get($where)->result();
         return count($data) === 0; 
     }
